@@ -116,12 +116,6 @@ class Wp_Site_Health {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-site-health-admin.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-site-health-public.php';
-
 		$this->loader = new Wp_Site_Health_Loader();
 
 	}
