@@ -1,32 +1,10 @@
-(function( $ ) {
-	'use strict';
+($ => {
+	/***** The PLAN *****/
 
-	/**
-	 * All of the code for your admin-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+	// Use PHP to register some divs. After that, let Vue take over.
+	// We can use jQuery to search for the divs and instantiate
+	// them as needed.
 
-})( jQuery );
+	// We'll use the browser to make any requests.
+	// Anything going to the backend will be using the WP REST API.
+})(jQuery);

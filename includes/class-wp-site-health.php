@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  */
-class Wp_Site_Health {
+class Kernl_Wp_Site_Health {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -56,7 +56,6 @@ class Wp_Site_Health {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
-		$this->define_public_hooks();
 
 	}
 
@@ -68,7 +67,6 @@ class Wp_Site_Health {
 	 * - Wp_Site_Health_Loader. Orchestrates the hooks of the plugin.
 	 * - Wp_Site_Health_i18n. Defines internationalization functionality.
 	 * - Wp_Site_Health_Admin. Defines all hooks for the admin area.
-	 * - Wp_Site_Health_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -129,22 +127,6 @@ class Wp_Site_Health {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
-	}
-
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
-
-		$plugin_public = new Wp_Site_Health_Public( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 	}
 

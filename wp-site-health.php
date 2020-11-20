@@ -18,22 +18,22 @@ if ( ! defined( 'WPINC' ) ) { die; }
 define( 'WP_SITE_HEALTH_VERSION', '1.0.0' );
 
 // Activation bootstrap
-// function activate_wp_site_health() {
-// 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-health-activator.php';
-// 	Wp_Site_Health_Activator::activate();
-// }
-// register_activation_hook( __FILE__, 'activate_wp_site_health' );
+function activate_wp_site_health() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-health-activator.php';
+	Wp_Site_Health_Activator::activate();
+}
+register_activation_hook( __FILE__, 'activate_wp_site_health' );
 
-// // Deactivation bootstrap
-// function deactivate_wp_site_health() {
-// 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-health-deactivator.php';
-// 	Wp_Site_Health_Deactivator::deactivate();
-// }
-// register_deactivation_hook( __FILE__, 'deactivate_wp_site_health' );
+// Deactivation bootstrap
+function deactivate_wp_site_health() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-health-deactivator.php';
+	Wp_Site_Health_Deactivator::deactivate();
+}
+register_deactivation_hook( __FILE__, 'deactivate_wp_site_health' );
 
 // Include base plugin class and instantiate
 require plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-health.php';
-$plugin = new Wp_Site_Health();
+$plugin = new Kernl_Wp_Site_Health();
 $plugin->run();
 
 ?>
