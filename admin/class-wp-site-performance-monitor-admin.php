@@ -1,5 +1,4 @@
 <?php
-
 class Wp_Site_Performance_monitor_Admin {
 	private $plugin_name;
 	private $version;
@@ -14,8 +13,19 @@ class Wp_Site_Performance_monitor_Admin {
 	}
 
 	public function enqueue_scripts() {
-		wp_enqueue_script( "{$this->plugin_name}-vue", plugin_dir_url( __FILE__ ) . 'js/vue.js', array(), $this->version, false );
+		wp_enqueue_script( "{$this->plugin_name}-vue", plugin_dir_url( __FILE__ ) . 'js/lib/vue.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-site-performance-monitor-admin.js', array( 'jquery' ), $this->version, false );
+	}
+
+	public function register_menu() {
+		add_submenu_page(
+			'options-general.php',
+			'Site Performance Monitor',
+			'Site Performance Monitor',
+			'administrator',
+			'wp-site-performance-monitor-settings',
+			'admin_settings_menu_bootstrap'
+		);
 	}
 
 }

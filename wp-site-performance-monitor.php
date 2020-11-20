@@ -31,7 +31,8 @@ function deactivate_wp_site_health() {
 }
 register_deactivation_hook( __FILE__, 'deactivate_wp_site_health' );
 
-// Include base plugin class and instantiate
+// Include base plugin class, partials, and instantiate
+require plugin_dir_path( __FILE__ ) . 'admin/partials/wp-site-performance-monitor-admin-display.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-performance-monitor.php';
 $plugin = new Kernl_Wp_Site_Performance_monitor();
 $plugin->run();

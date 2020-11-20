@@ -5,6 +5,8 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  */
-?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+ function admin_settings_menu_bootstrap() { ?>
+     <div id="site-performance-monitor-admin-container">WIP - bootstrap Vue.js application.</div>
+ <?php
+ }

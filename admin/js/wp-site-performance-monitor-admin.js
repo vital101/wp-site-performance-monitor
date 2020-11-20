@@ -1,10 +1,13 @@
 ($ => {
-	/***** The PLAN *****/
 
-	// Use PHP to register some divs. After that, let Vue take over.
-	// We can use jQuery to search for the divs and instantiate
-	// them as needed.
+	// Bootstrap the admin page is active.
+	const adminContainer = document.getElementById("site-performance-monitor-admin-container");
+	if (adminContainer) {
+		const app = Vue.createApp({});
+		app.component('MyComponent', MyComponentFunction); // Imported from enqueue scripts
+		app.mount('#myId');
+	}
 
-	// We'll use the browser to make any requests.
-	// Anything going to the backend will be using the WP REST API.
+	// Bootstrap the dashboard widget.
+	// WIP
 })(jQuery);
