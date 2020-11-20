@@ -5,7 +5,7 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  */
-class Wp_Site_Health_Deactivator {
+class Wp_Site_Performance_monitor_Deactivator {
 
 	/**
 	 * Short Description. (use period)

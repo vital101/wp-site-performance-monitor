@@ -5,7 +5,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  */
-class Wp_Site_Health_Activator {
+class Wp_Site_Performance_monitor_Activator {
 
 	/**
 	 * Short Description. (use period)

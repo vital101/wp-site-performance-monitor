@@ -1,6 +1,6 @@
 <?php
 
-class Wp_Site_Health_Admin {
+class Wp_Site_Performance_monitor_Admin {
 	private $plugin_name;
 	private $version;
 
@@ -10,12 +10,12 @@ class Wp_Site_Health_Admin {
 	}
 
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-site-health-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-site-performance-monitor-admin.css', array(), $this->version, 'all' );
 	}
 
 	public function enqueue_scripts() {
 		wp_enqueue_script( "{$this->plugin_name}-vue", plugin_dir_url( __FILE__ ) . 'js/vue.js', array(), $this->version, false );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-site-health-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-site-performance-monitor-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
 }

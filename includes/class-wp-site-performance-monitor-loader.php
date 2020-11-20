@@ -3,7 +3,7 @@
 /**
  * Register all actions and filters for the plugin
  */
-class Wp_Site_Health_Loader {
+class Wp_Site_Performance_monitor_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

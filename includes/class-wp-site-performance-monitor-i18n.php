@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  */
-class Wp_Site_Health_i18n {
+class Wp_Site_Performance_monitor_i18n {
 
 
 	/**
@@ -17,7 +17,7 @@ class Wp_Site_Health_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'wp-site-health',
+			'wp-site-performance-monitor',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

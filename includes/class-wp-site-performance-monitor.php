@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  */
-class Kernl_Wp_Site_Health {
+class Kernl_Wp_Site_Performance_monitor {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -14,7 +14,7 @@ class Kernl_Wp_Site_Health {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Wp_Site_Health_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Wp_Site_Performance_monitor_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -51,7 +51,7 @@ class Kernl_Wp_Site_Health {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'wp-site-health';
+		$this->plugin_name = 'wp-site-performance-monitor';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -64,9 +64,9 @@ class Kernl_Wp_Site_Health {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Wp_Site_Health_Loader. Orchestrates the hooks of the plugin.
-	 * - Wp_Site_Health_i18n. Defines internationalization functionality.
-	 * - Wp_Site_Health_Admin. Defines all hooks for the admin area.
+	 * - Wp_Site_Performance_monitor_Loader. Orchestrates the hooks of the plugin.
+	 * - Wp_Site_Performance_monitor_i18n. Defines internationalization functionality.
+	 * - Wp_Site_Performance_monitor_Admin. Defines all hooks for the admin area.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -80,27 +80,27 @@ class Kernl_Wp_Site_Health {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-site-health-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-site-performance-monitor-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-site-health-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-site-performance-monitor-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-site-health-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-site-performance-monitor-admin.php';
 
-		$this->loader = new Wp_Site_Health_Loader();
+		$this->loader = new Wp_Site_Performance_monitor_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Wp_Site_Health_i18n class in order to set the domain and to register the hook
+	 * Uses the Wp_Site_Performance_monitor_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -108,7 +108,7 @@ class Kernl_Wp_Site_Health {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Wp_Site_Health_i18n();
+		$plugin_i18n = new Wp_Site_Performance_monitor_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -123,7 +123,7 @@ class Kernl_Wp_Site_Health {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Wp_Site_Health_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Wp_Site_Performance_monitor_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -154,7 +154,7 @@ class Kernl_Wp_Site_Health {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Wp_Site_Health_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Wp_Site_Performance_monitor_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
