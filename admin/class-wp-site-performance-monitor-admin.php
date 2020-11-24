@@ -13,6 +13,15 @@ class Wp_Site_Performance_monitor_Admin {
 	}
 
 	public function enqueue_styles() {
+		// Bootstrap Styles
+		$bootstrapPath = plugin_dir_url(__FILE__) . 'css/bootstrap.min.css';
+		wp_enqueue_style(
+			$this->plugin_name . '-bootstrap',
+			$bootstrapPath,
+			NO_DEPENDENCIES,
+			$this->version,
+			'all'
+		);
 		// Production
 		$cssDir = plugin_dir_path( __FILE__ ) . 'js/build/css';
 		$cssFiles = scandir($cssDir);
@@ -21,7 +30,7 @@ class Wp_Site_Performance_monitor_Admin {
 				wp_enqueue_style(
 					$this->plugin_name,
 					plugin_dir_url( __FILE__ ) . "js/build/css/{$file}",
-					NO_DEPENDENCIES,
+					array($this->plugin_name . '-bootstrap'),
 					$this->version,
 					'all'
 				);

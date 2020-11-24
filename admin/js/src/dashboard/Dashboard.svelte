@@ -1,6 +1,9 @@
 <script>
   import { getStatus } from '../lib/wp-api';
-  import { Stretch } from 'svelte-loading-spinners';
+  import CreateSiteForm from './CreateSiteForm.svelte';
+  import Loading from './Loading.svelte';
+  import ErrorAlert from './ErrorAlert.svelte';
+  import { Col, Container, Row } from 'sveltestrap';
 
   /*
   1. If no "kernl-spm-setup-complete" option  (get via REST endpoint)
@@ -19,9 +22,26 @@
   7. Eventually: Notification thresholds
   */
  const status = getStatus();
+ let setupComplete = false;
+ status.then(data => {
+   setupComplete = data.setupComplete;
+   if (setupComplete) {
+     // Check to see if there is data yet.
+     // If yes, display.
+     // If no, display message. Ask use if they want to be emailed when ready.
+   } else {
+     console.log(2);
+     // Show form for registering site.
+     // Long-poll Kernl to see if ready yet. Once ready, show the things.
+   }
+ }).catch(err => {
+    console.log(err);
+ });
+ const errorMessage = "There was an error fetching the performance monitor status.";
 </script>
 
 <style>
+
 </style>
 
 <div class="dashboard">
@@ -30,11 +50,17 @@
     Refresh Data
   </a>
   <hr class="wp-header-end">
-  {#await status}
-    <Stretch size="60" color="#1D9AB7" unit="px"></Stretch>
-  {:then item}
-    <pre>{item.statusComplete ? "Yes" : "No"}</pre>
-  {:catch err}
-    There was an error {err}
-  {/await}
+  <Container>
+    {#await status}
+      <Loading></Loading>
+    {:then item}
+      {#if setupComplete}
+        <p>Setup Done.</p>
+      {:else}
+        <CreateSiteForm></CreateSiteForm>
+      {/if}
+    {:catch}
+      <ErrorAlert message={errorMessage}></ErrorAlert>
+    {/await}
+  </Container>
 </div>

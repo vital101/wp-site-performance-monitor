@@ -7,8 +7,9 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
-    "svelte": "^3.24.0",
-    "svelte-loading-spinners": "^0.1.1"
+    "svelte": "^3.29.7",
+    "svelte-loading-spinners": "^0.1.1",
+    "sveltestrap": "^3.9.6"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.0.4",

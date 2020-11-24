@@ -16,9 +16,10 @@ export async function getStatus() {
 }
 
 function forceWait() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve();
-        }, 2000);
+            // reject();
+        }, 1000);
     });
 }
