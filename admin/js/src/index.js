@@ -4,16 +4,12 @@ import Dashboard from "./dashboard/Dashboard.svelte";
 var app;
 var topLevelEl = document.getElementById("kernl-spm-top-level");
 if (topLevelEl) {
-  app = new Dashboard({
-    target: document.getElementById("kernl-spm-top-level")
-  });
+  app = new Dashboard({ target: topLevelEl });
 }
 
 var settingsEl = document.getElementById("kernl-spm-settings-container");
 if (settingsEl) {
-  app = new Settings({
-    target: settingsEl
-  });
+  app = new Settings({ target: settingsEl });
 }
 
 export default app;

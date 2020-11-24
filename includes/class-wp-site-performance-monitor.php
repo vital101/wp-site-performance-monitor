@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -49,21 +48,9 @@ class Kernl_Wp_Site_Performance_monitor {
 
 	}
 
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Wp_Site_Performance_monitor_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
 	private function set_locale() {
-
 		$plugin_i18n = new Wp_Site_Performance_monitor_i18n();
-
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -83,6 +70,17 @@ class Kernl_Wp_Site_Performance_monitor {
 
 		// Menus
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_menu' );
+
+		// REST API
+		add_action( 'rest_api_init', function () {
+			register_rest_route('kernl/v1', '/status', array(
+				'methods' => 'GET',
+				'callback' => array($this, 'status'),
+				'permission_callback' => function () {
+					return current_user_can('edit_others_posts');
+				}
+			));
+		});
 	}
 
 	/**
@@ -124,5 +122,15 @@ class Kernl_Wp_Site_Performance_monitor {
 	public function get_version() {
 		return $this->version;
 	}
+
+	public function status(WP_REST_Request $request) {
+        $optionStatus = get_option('kernl-spm-setup-complete', 'false');
+        if (!$optionStatus) {
+            add_option('kernl-spm-setup-complete', 'false');
+		}
+        return array(
+			"setupComplete" => $optionStatus === 'false' ? false : true
+		);
+    }
 
 }

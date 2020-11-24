@@ -79,6 +79,19 @@ class Wp_Site_Performance_monitor_Admin {
 			$this->version,
 			INCLUDE_AT_BOTTOM
 		);
+
+		// WP REST API
+		$scripts = array(
+			"{$this->plugin_name}-webpack-runtime",
+			"{$this->plugin_name}-commons",
+			"{$this->plugin_name}-index"
+		);
+		foreach($scripts as $handle) {
+			wp_localize_script($handle, 'wpApiSettings', array(
+				'root' => esc_url_raw( rest_url() ),
+				'nonce' => wp_create_nonce( 'wp_rest' )
+			));
+		}
 	}
 
 	public function register_menu() {

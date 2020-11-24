@@ -2,20 +2,22 @@
 
 /**
  * Fired during plugin activation.
- *
- * This class defines all code necessary to run during the plugin's activation.
  */
 class Wp_Site_Performance_monitor_Activator {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
 	public static function activate() {
+		self::setSiteHash();
+	}
 
+	public static function setSiteHash() {
+		// Note: We need to have some sort of exception for local
+		//  installs. Basically disable everything if localhost or ip address
+		//  This will not work on localhost/127.0.0.1 etc.
+		$siteUrl = get_site_url();
+		$siteHash = md5("kernl-spm-{$siteUrl}");
+		if (!get_option("kernl-spm-hash", false)) {
+			add_option("kernl-spm-hash", $siteHash);
+		}
 	}
 
 }
