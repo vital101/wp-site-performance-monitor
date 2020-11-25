@@ -3,7 +3,7 @@
   import CreateSiteForm from './CreateSiteForm.svelte';
   import Loading from './Loading.svelte';
   import ErrorAlert from './ErrorAlert.svelte';
-  import { Col, Container, Row } from 'sveltestrap';
+  import { Container } from 'sveltestrap';
 
   /*
   1. If no "kernl-spm-setup-complete" option  (get via REST endpoint)
