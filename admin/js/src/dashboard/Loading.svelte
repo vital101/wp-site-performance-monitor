@@ -1,9 +1,10 @@
 <script>
     import { Stretch } from 'svelte-loading-spinners';
     import { Col, Row } from 'sveltestrap';
+    export let size = 60;
 
     const props = {
-        size: 60,
+        size,
         color: "#1D9AB7",
         unit: "px"
     };

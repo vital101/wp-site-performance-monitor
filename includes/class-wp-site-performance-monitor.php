@@ -74,8 +74,16 @@ class Kernl_Wp_Site_Performance_monitor {
 		// REST API
 		add_action( 'rest_api_init', function () {
 			register_rest_route('kernl/v1', '/status', array(
-				'methods' => 'GET',
+				'methods' => 'GET,POST',
 				'callback' => array($this, 'status'),
+				'permission_callback' => function () {
+					return current_user_can('edit_others_posts');
+				}
+			));
+
+			register_rest_route('kernl/v1', '/site', array(
+				'methods' => 'GET,POST',
+				'callback' => array($this, 'site'),
 				'permission_callback' => function () {
 					return current_user_can('edit_others_posts');
 				}
@@ -83,54 +91,56 @@ class Kernl_Wp_Site_Performance_monitor {
 		});
 	}
 
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
-	}
+	public function run() { $this->loader->run(); }
+	public function get_plugin_name() { return $this->plugin_name; }
+	public function get_loader() { return $this->loader; }
+	public function get_version() { return $this->version; }
 
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
+	public function site(WP_REST_Request $request) {
+		if ($request->get_method() == 'GET') {
+			return array(
+				"siteId" => get_option('kernl-spm-site-id', false)
+			);
+		}
 
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Wp_Site_Performance_monitor_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
+		if ($request->get_method() == 'POST') {
+			$data = $request->get_json_params();
+			$siteIdOption = get_option('kernl-spm-site-id', false);
+			if (!$siteIdOption) {
+				add_option('kernl-spm-site-id', $data["siteId"]);
+			} else {
+				update_option('kernl-spm-site-id', $data["siteId"]);
+			}
 
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
+			return array(
+				"siteId" => get_option('kernl-spm-site-id', false)
+			);
+		}
 	}
 
 	public function status(WP_REST_Request $request) {
-        $optionStatus = get_option('kernl-spm-setup-complete', 'false');
-        if (!$optionStatus) {
-            add_option('kernl-spm-setup-complete', 'false');
+		if ($request->get_method() == 'GET') {
+			$optionStatus = get_option('kernl-spm-setup-complete', 'false');
+			if (!$optionStatus) {
+				add_option('kernl-spm-setup-complete', 'false');
+			}
+			return array(
+				"setupComplete" => $optionStatus === 'false' ? false : true
+			);
 		}
-        return array(
-			"setupComplete" => $optionStatus === 'false' ? false : true
-		);
+
+		if ($request->get_method() == 'POST') {
+			$optionStatus = get_option('kernl-spm-setup-complete', 'false');
+			if (!$optionStatus) {
+				add_option('kernl-spm-setup-complete', 'true');
+			} else {
+				update_option('kernl-spm-setup-complete', 'true');
+			}
+
+			return array(
+				"setupComplete" => true
+			);
+		}
     }
 
 }

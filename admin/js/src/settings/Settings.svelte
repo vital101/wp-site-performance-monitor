@@ -1,6 +1,6 @@
 <script>
   import {onMount} from 'svelte';
-  const spmHash = window.kernlSpmHash;
+  const siteId = window.kernlSiteId;
   let count = 0;
   onMount(() => {
     const interval = setInterval(() => count++, 1000);
@@ -18,5 +18,5 @@
 
 <div class="Settings">
   <h1>This is settings {count}</h1>
-  <p>{spmHash}</p>
+  <p>{siteId}</p>
 </div>

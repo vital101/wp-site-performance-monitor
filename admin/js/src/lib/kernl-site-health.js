@@ -1,20 +1,22 @@
 import axios from "axios";
+import * as wpAPI from "./wp-api";
 
 const kernlBaseUrl = "https://kernl.us/api/v2/public/site-health";
 
-//
-// This function registers the site with Kernl and starts the process for
-// getting the initial round of data.
-//
-// NOTE: This endpoint DOES NOT EXIST yet.
-//
-export async function bootstrap(siteUrl, uuid, resolution) {
-    // const response = await axios.post(`${kernlBaseUrl}/bootstrap`, { spmHash }, {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'X-WP-Nonce': getNonce()
-    //     }
-    // });
-    // setNonce(response.data.nonce);
-    // return response.data.result;
+export async function createSite(url, monitoringResolution) {
+    const response = await axios.post(kernlBaseUrl, {
+        url,
+        name: url,
+        monitoringResolution
+    });
+    const id = response.data._id;
+    await wpAPI.storeSiteId(id)
+    await wpAPI.setStatus(true);
+    return id;
+}
+
+export async function getSiteData(siteId) {
+    await wpAPI.forceWait(2);
+    const response = await axios.get(`${kernlBaseUrl}/${siteId}`);
+    return response.data;
 }

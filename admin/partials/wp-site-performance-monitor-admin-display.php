@@ -1,6 +1,8 @@
 <?php
 
 function admin_top_level_menu_bootstrap() {
+    $kernlLogoUrl = plugin_dir_url(__FILE__) . "/img/logo.png";
+    $kernlLogoUrl = str_replace("/partials/", "", $kernlLogoUrl);
     include plugin_dir_path( __FILE__ ) . '/html/admin_top_level_menu.html.php';
 }
 
