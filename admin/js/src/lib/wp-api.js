@@ -3,7 +3,6 @@ import axios from "axios";
 const BASE_URL = '/wp-json/kernl/v1';
 
 export async function getStatus() {
-    await forceWait(1);
     const response = await axios({
         method: 'GET',
         url: `${BASE_URL}/status`,

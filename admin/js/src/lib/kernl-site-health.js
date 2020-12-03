@@ -16,7 +16,6 @@ export async function createSite(url, monitoringResolution) {
 }
 
 export async function getSiteData(siteId) {
-    await wpAPI.forceWait(2);
     const response = await axios.get(`${kernlBaseUrl}/${siteId}`);
     return response.data;
 }
