@@ -1,6 +1,7 @@
 <script>
     import Chart from 'chart.js';
     import { v4 as generateUUID } from 'uuid';
+    import { parseISO, format } from 'date-fns';
     import { afterUpdate, onMount } from 'svelte';
 
     export let data;
@@ -8,10 +9,7 @@
     export let dataColor;
     export let dataAxisLabel;
 
-    window.addEventListener('resize', setCanvasWidth, false);
-
     let uuid = generateUUID();
-    let myChart;
 
     const colors = {
         blue: 'rgba(54, 162, 235, 0.2)',
@@ -20,45 +18,62 @@
         green: 'rgba(75, 192, 192, 0.2)'
     };
 
-    function setCanvasWidth() {
-        if (document) {
-            const canvas = document.getElementById(uuid);
-            if (canvas && canvas.parentElement) {
-                const parent = canvas.parentElement;
-                canvas.width = parent.offsetWidth - 60;
-            }
-        }
-    }
-
     function updateChart() {
-        setCanvasWidth();
         if (document) {
             const canvas = document.getElementById(uuid);
             if (canvas) {
-                myChart = new Chart(canvas, {
+                const labelsModifier = Math.floor(data.length / 5);
+                new Chart(canvas, {
                     type: 'line',
                     data: {
-                        labels: data.map(d => ''/*parseISO(d.lastCheck)*/),
+                        labels: data.map(d => format(parseISO(d.lastCheck), 'LLL d @ hh:mm a')),
                         legend: { display: false },
                         datasets: [{
                             label: dataLabel,
                             data: data.map(d => d.time),
                             borderWidth: 1,
                             backgroundColor: [colors[dataColor]],
-                            pointRadius: 0
+                            pointRadius: 0,
+                            pointHitRadius: 10
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         legend: { display: false },
+                        tooltips: {
+                            callbacks: {
+                                label: tooltipItem => {
+                                    return `${tooltipItem.yLabel}ms`;
+                                },
+                                title: tooltipItem => {
+                                    return tooltipItem[0].label;
+                                }
+                            }
+                        },
                         scales: {
                             xAxes: [{
-                                display: false
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    autoSkip: false,
+                                    source: 'labels',
+                                    callback: (value, index) => {
+                                        if (index % labelsModifier === 0) {
+                                            return value;
+                                        } else {
+                                            return "";
+                                        }
+                                    }
+                                }
                             }],
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    callback: value => {
+                                        return `${value}ms`
+                                    }
                                 },
                                 scaleLabel: {
                                     display: true,
