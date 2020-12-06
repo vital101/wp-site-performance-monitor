@@ -131,14 +131,14 @@ class Wp_Site_Performance_monitor_Admin {
 			'dashicons-chart-bar'
 		);
 
-		add_submenu_page(
-			'site-performance-monitor',
-			'Settings',
-			'Settings',
-			'administrator',
-			'wp-site-performance-monitor-settings',
-			'admin_settings_menu_bootstrap'
-		);
+		// add_submenu_page(
+		// 	'site-performance-monitor',
+		// 	'Settings',
+		// 	'Settings',
+		// 	'administrator',
+		// 	'wp-site-performance-monitor-settings',
+		// 	'admin_settings_menu_bootstrap'
+		// );
 	}
 
 }

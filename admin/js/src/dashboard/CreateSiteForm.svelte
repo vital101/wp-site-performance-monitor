@@ -13,7 +13,7 @@
         Row
     } from 'sveltestrap';
     import { v4 as uuidv4 } from 'uuid';
-    import Loading from './Loading.svelte';
+    import Loading from '../components/Loading.svelte';
     import { setupComplete, siteId } from './stores';
     import { forceWait } from '../lib/wp-api';
     import { createSite } from '../lib/kernl-site-health';

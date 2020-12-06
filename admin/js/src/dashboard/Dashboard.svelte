@@ -1,8 +1,8 @@
 <script>
   import { getSiteId, getStatus } from '../lib/wp-api';
   import CreateSiteForm from './CreateSiteForm.svelte';
-  import Loading from './Loading.svelte';
-  import ErrorAlert from './ErrorAlert.svelte';
+  import Loading from '../components/Loading.svelte';
+  import ErrorAlert from '../components/ErrorAlert.svelte';
   import TodayDataDashboard from './TodayDataDashboard.svelte';
   import { Container } from 'sveltestrap';
   import { setupComplete, siteId } from './stores';
