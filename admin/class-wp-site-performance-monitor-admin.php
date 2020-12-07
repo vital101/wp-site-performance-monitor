@@ -50,19 +50,19 @@ class Wp_Site_Performance_monitor_Admin {
 		$jsFiles = scandir($jsDir);
 		foreach($jsFiles as $file) {
 			if (strpos($file, 'LICENSE') === false) {
-				if (preg_match('/webpack-runtime\..+\.js/i', $file, $m)) {
+				if (preg_match('/webpack-runtime\..+\.js$/i', $file, $m)) {
 					$webpackRuntime = $file;
 				}
 
-				if (preg_match('/commons\..+\.js/i', $file, $m)) {
+				if (preg_match('/commons\..+\.js$/i', $file, $m)) {
 					$commons = $file;
 				}
 
-				if (preg_match('/^index\..+\.js/i', $file, $m)) {
+				if (preg_match('/^index\..+\.js$/i', $file, $m)) {
 					$index = $file;
 				}
 
-				if (preg_match('/lib~index\..+\.js/i', $file, $m)) {
+				if (preg_match('/lib~index\..+\.js$/i', $file, $m)) {
 					$libIndex = $file;
 				}
 			}

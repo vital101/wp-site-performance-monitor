@@ -10,8 +10,10 @@
     import Loading from '../components/Loading.svelte';
     import LineChart from './LineChart.svelte';
     import BarChart from './BarChart.svelte';
+    import RunningSiteMonitor from './RunningSiteMonitor.svelte';
     import { siteId, site } from './stores';
     import { getSiteData } from '../lib/kernl-site-health';
+    import { forceWait } from '../lib/wp-api';
     import { parseISO, format } from 'date-fns';
 
     const kernlLogo = window.kernlLogoUrl;
@@ -19,28 +21,61 @@
     let ttfbChartProps = null;
     let lighthouseProps = null;
     let lighthouseDate = null;
+    let hasData = false;
     const loadingSize = 40;
+
+    function siteHasData(siteData) {
+        return siteData &&
+            siteData.responseTime &&
+            siteData.responseTime.length > 0 &&
+            siteData.ttfb &&
+            siteData.ttfb.length > 0 &&
+            siteData.lighthouse &&
+            siteData.lighthouse.hasOwnProperty('scores') &&
+            siteData.lighthouse.scores.hasOwnProperty('pwa');
+    }
+
+    function buildPropsAndFormatData(siteData) {
+        site.set(siteData.site);
+        responseTimeChartProps = {
+            chartTitle: 'Response Time',
+            dataAxisLabel: 'Time in milliseconds',
+            dataLabel: 'Response Time',
+            dataColor: 'red',
+            data: siteData.responseTime
+        };
+        ttfbChartProps = {
+            chartTitle: 'TTFB',
+            dataAxisLabel: 'Time in milliseconds',
+            dataLabel: 'TTFB',
+            dataColor: 'blue',
+            data: siteData.ttfb
+        };
+        lighthouseProps = {
+            data: siteData.lighthouse.scores
+        };
+        lighthouseDate = format(parseISO(siteData.lighthouse.lastCheck), 'LLL d y');
+    }
+
+    async function waitForData() {
+        let siteData;
+        do {
+            await forceWait(1);
+            siteData = await getSiteData($siteId);
+        } while(!siteHasData(siteData));
+        buildPropsAndFormatData(siteData);
+        hasData = true;
+    }
+
+    // Init
     const loading = getSiteData($siteId)
         .then(siteData => {
-            site.set(siteData.site);
-            responseTimeChartProps = {
-                chartTitle: 'Response Time',
-                dataAxisLabel: 'Time in milliseconds',
-                dataLabel: 'Response Time',
-                dataColor: 'red',
-                data: siteData.responseTime
-            };
-            ttfbChartProps = {
-                chartTitle: 'TTFB',
-                dataAxisLabel: 'Time in milliseconds',
-                dataLabel: 'TTFB',
-                dataColor: 'blue',
-                data: siteData.ttfb
-            };
-            lighthouseProps = {
-                data: siteData.lighthouse.scores
-            };
-            lighthouseDate = format(parseISO(siteData.lighthouse.lastCheck), 'LLL d y');
+            hasData = siteHasData(siteData);
+            if (hasData) {
+                buildPropsAndFormatData(siteData);
+            } else {
+                waitForData();
+            }
         });
 </script>
 
@@ -65,8 +100,12 @@
             <CardBody>
                 {#await loading}
                     <Loading size={loadingSize}></Loading>
-                {:then done}
-                    <LineChart {...responseTimeChartProps}></LineChart>
+                {:then}
+                    {#if !hasData}
+                        <RunningSiteMonitor></RunningSiteMonitor>
+                    {:else}
+                        <LineChart {...responseTimeChartProps}></LineChart>
+                    {/if}
                 {/await}
             </CardBody>
         </Card>
@@ -79,8 +118,12 @@
             <CardBody>
                 {#await loading}
                     <Loading size={loadingSize}></Loading>
-                {:then done}
-                    <LineChart {...ttfbChartProps}></LineChart>
+                {:then}
+                    {#if !hasData}
+                        <RunningSiteMonitor></RunningSiteMonitor>
+                    {:else}
+                        <LineChart {...ttfbChartProps}></LineChart>
+                    {/if}
                 {/await}
             </CardBody>
         </Card>
@@ -99,8 +142,12 @@
             <CardBody>
                 {#await loading}
                     <Loading size={loadingSize}></Loading>
-                {:then data}
-                    <BarChart {...lighthouseProps}></BarChart>
+                {:then}
+                    {#if !hasData}
+                        <RunningSiteMonitor></RunningSiteMonitor>
+                    {:else}
+                        <BarChart {...lighthouseProps}></BarChart>
+                    {/if}
                 {/await}
             </CardBody>
         </Card>
