@@ -11,6 +11,7 @@
     import LineChart from './LineChart.svelte';
     import BarChart from './BarChart.svelte';
     import RunningSiteMonitor from './RunningSiteMonitor.svelte';
+    import SingleValueDisplay from './SingleValueDisplay.svelte';
     import { siteId, site } from './stores';
     import { getSiteData } from '../lib/kernl-site-health';
     import { forceWait } from '../lib/wp-api';
@@ -103,6 +104,11 @@
                 {:then}
                     {#if !hasData}
                         <RunningSiteMonitor></RunningSiteMonitor>
+                    {:else if responseTimeChartProps.data.length === 1}
+                        <SingleValueDisplay
+                            lastCheck={responseTimeChartProps.data[0].lastCheck}
+                            value={responseTimeChartProps.data[0].time}
+                            monitoringResolution={$site.monitoringResolution} />
                     {:else}
                         <LineChart {...responseTimeChartProps}></LineChart>
                     {/if}
@@ -121,6 +127,11 @@
                 {:then}
                     {#if !hasData}
                         <RunningSiteMonitor></RunningSiteMonitor>
+                    {:else if ttfbChartProps.data.length === 1}
+                        <SingleValueDisplay
+                            lastCheck={ttfbChartProps.data[0].lastCheck}
+                            value={ttfbChartProps.data[0].time}
+                            monitoringResolution={$site.monitoringResolution} />
                     {:else}
                         <LineChart {...ttfbChartProps}></LineChart>
                     {/if}
