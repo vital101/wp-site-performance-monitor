@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       WP Site Performance Monitor
  * Plugin URI:        https://kernl.us/wp-site-performance-monitor
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       The Kernl WP Site Performance Monitor periodically checks your site performance and allows you to track your response time, time to first byte (TTFB), and Lighthouse scores all from your WordPress admin.
  * Version:           1.0.0
  * Author:            Kernl.us
  * Author URI:        https://kernl.us
