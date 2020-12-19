@@ -1,4 +1,5 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
+const webpack = require('webpack');
 module.exports = {
   mount: {
     public: '/',
@@ -7,7 +8,19 @@ module.exports = {
   plugins: [
     '@snowpack/plugin-svelte',
     '@snowpack/plugin-dotenv',
-    '@snowpack/plugin-webpack',
+    [
+      '@snowpack/plugin-webpack',
+      {
+        extendConfig: config => {
+          config.plugins.push(
+            new webpack.optimize.LimitChunkCountPlugin({
+              maxChunks: 1
+            })
+          );
+          return config;
+        }
+      }
+    ]
   ],
   install: [
     /* ... */

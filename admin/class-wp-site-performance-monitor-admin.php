@@ -42,7 +42,6 @@ class Wp_Site_Performance_monitor_Admin {
 		$webpackRuntime = null;
 		$commons = null;
 		$index = null;
-		$libIndex = null;
 
 		// Find all the webpack bundle files.
 		$jsDir = plugin_dir_path( __FILE__ ) . 'js/build/js';
@@ -60,10 +59,6 @@ class Wp_Site_Performance_monitor_Admin {
 				if (preg_match('/^index\..+\.js$/i', $file, $m)) {
 					$index = $file;
 				}
-
-				if (preg_match('/lib~index\..+\.js$/i', $file, $m)) {
-					$libIndex = $file;
-				}
 			}
 		}
 
@@ -76,20 +71,10 @@ class Wp_Site_Performance_monitor_Admin {
 			KERNL_SPM_INCLUDE_AT_BOTTOM
 		);
 		wp_enqueue_script(
-			"{$this->plugin_name}-lib-index",
-			plugin_dir_url( __FILE__ ) . "js/build/js/{$libIndex}",
-			array(
-				"{$this->plugin_name}-webpack-runtime",
-			),
-			$this->version,
-			KERNL_SPM_INCLUDE_AT_BOTTOM
-		);
-		wp_enqueue_script(
 			"{$this->plugin_name}-commons",
 			plugin_dir_url( __FILE__ ) . "js/build/js/{$commons}",
 			array(
 				"{$this->plugin_name}-webpack-runtime",
-				"{$this->plugin_name}-lib-index"
 			),
 			$this->version,
 			KERNL_SPM_INCLUDE_AT_BOTTOM
@@ -99,7 +84,6 @@ class Wp_Site_Performance_monitor_Admin {
 			plugin_dir_url( __FILE__ ) . "js/build/js/{$index}",
 			array(
 				"{$this->plugin_name}-webpack-runtime",
-				"{$this->plugin_name}-lib-index",
 				"{$this->plugin_name}-commons"
 			),
 			$this->version,
