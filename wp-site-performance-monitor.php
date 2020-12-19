@@ -15,21 +15,21 @@
 // If called directly, abort.
 if ( ! defined( 'WPINC' ) ) { die; }
 
-define( 'WP_SITE_HEALTH_VERSION', '1.0.0' );
+define( 'KERNL_SPM_WP_SITE_HEALTH_VERSION', '1.0.0' );
 
 // Activation bootstrap
-function activate_wp_site_health() {
+function kernl_spm_activate_wp_site_health() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-performance-monitor-activator.php';
 	Wp_Site_Performance_monitor_Activator::activate();
 }
-register_activation_hook( __FILE__, 'activate_wp_site_health' );
+register_activation_hook( __FILE__, 'kernl_spm_activate_wp_site_health' );
 
 // Deactivation bootstrap
-function deactivate_wp_site_health() {
+function kernl_spm_deactivate_wp_site_health() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-site-performance-monitor-deactivator.php';
 	Wp_Site_Performance_monitor_Deactivator::deactivate();
 }
-register_deactivation_hook( __FILE__, 'deactivate_wp_site_health' );
+register_deactivation_hook( __FILE__, 'kernl_spm_deactivate_wp_site_health' );
 
 // Include base plugin class, partials, and instantiate
 require plugin_dir_path( __FILE__ ) . 'admin/partials/wp-site-performance-monitor-admin-display.php';

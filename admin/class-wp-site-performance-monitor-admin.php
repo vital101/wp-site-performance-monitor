@@ -1,7 +1,6 @@
 <?php
-define("INCLUDE_AT_TOP", false);
-define("INCLUDE_AT_BOTTOM", true);
-define("NO_DEPENDENCIES", []);
+define("KERNL_SPM_INCLUDE_AT_BOTTOM", true);
+define("KERNL_SPM_NO_DEPENDENCIES", []);
 
 class Wp_Site_Performance_monitor_Admin {
 	private $plugin_name;
@@ -18,7 +17,7 @@ class Wp_Site_Performance_monitor_Admin {
 		wp_enqueue_style(
 			$this->plugin_name . '-bootstrap',
 			$bootstrapPath,
-			NO_DEPENDENCIES,
+			KERNL_SPM_NO_DEPENDENCIES,
 			$this->version,
 			'all'
 		);
@@ -72,9 +71,9 @@ class Wp_Site_Performance_monitor_Admin {
 		wp_enqueue_script(
 			"{$this->plugin_name}-webpack-runtime",
 			plugin_dir_url( __FILE__ ) . "js/build/js/{$webpackRuntime}",
-			NO_DEPENDENCIES,
+			KERNL_SPM_NO_DEPENDENCIES,
 			$this->version,
-			INCLUDE_AT_BOTTOM
+			KERNL_SPM_INCLUDE_AT_BOTTOM
 		);
 		wp_enqueue_script(
 			"{$this->plugin_name}-lib-index",
@@ -83,7 +82,7 @@ class Wp_Site_Performance_monitor_Admin {
 				"{$this->plugin_name}-webpack-runtime",
 			),
 			$this->version,
-			INCLUDE_AT_BOTTOM
+			KERNL_SPM_INCLUDE_AT_BOTTOM
 		);
 		wp_enqueue_script(
 			"{$this->plugin_name}-commons",
@@ -93,7 +92,7 @@ class Wp_Site_Performance_monitor_Admin {
 				"{$this->plugin_name}-lib-index"
 			),
 			$this->version,
-			INCLUDE_AT_BOTTOM
+			KERNL_SPM_INCLUDE_AT_BOTTOM
 		);
 		wp_enqueue_script(
 			"{$this->plugin_name}-index",
@@ -104,7 +103,7 @@ class Wp_Site_Performance_monitor_Admin {
 				"{$this->plugin_name}-commons"
 			),
 			$this->version,
-			INCLUDE_AT_BOTTOM
+			KERNL_SPM_INCLUDE_AT_BOTTOM
 		);
 
 		// WP REST API

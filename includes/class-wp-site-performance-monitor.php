@@ -12,8 +12,8 @@ class Kernl_Wp_Site_Performance_monitor {
 	protected $version;
 
 	public function __construct() {
-		if ( defined( 'WP_SITE_HEALTH_VERSION' ) ) {
-			$this->version = WP_SITE_HEALTH_VERSION;
+		if ( defined( 'KERNL_SPM_WP_SITE_HEALTH_VERSION' ) ) {
+			$this->version = KERNL_SPM_WP_SITE_HEALTH_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
