@@ -25,7 +25,7 @@ class Wp_Site_Performance_monitor_Admin {
 		$cssDir = plugin_dir_path( __FILE__ ) . 'js/build/css';
 		$cssFiles = scandir($cssDir);
 		foreach($cssFiles as $file) {
-			if (preg_match('/(commons\..+\.css)/i', $file, $m)) {
+			if (preg_match('/(styles\..+\.css)/i', $file, $m)) {
 				wp_enqueue_style(
 					$this->plugin_name,
 					plugin_dir_url( __FILE__ ) . "js/build/css/{$file}",
@@ -40,7 +40,7 @@ class Wp_Site_Performance_monitor_Admin {
 
 	public function enqueue_scripts() {
 		$webpackRuntime = null;
-		$commons = null;
+		$styles = null;
 		$index = null;
 
 		// Find all the webpack bundle files.
@@ -52,8 +52,8 @@ class Wp_Site_Performance_monitor_Admin {
 					$webpackRuntime = $file;
 				}
 
-				if (preg_match('/commons\..+\.js$/i', $file, $m)) {
-					$commons = $file;
+				if (preg_match('/styles\..+\.js$/i', $file, $m)) {
+					$styles = $file;
 				}
 
 				if (preg_match('/^index\..+\.js$/i', $file, $m)) {
@@ -71,8 +71,8 @@ class Wp_Site_Performance_monitor_Admin {
 			KERNL_SPM_INCLUDE_AT_BOTTOM
 		);
 		wp_enqueue_script(
-			"{$this->plugin_name}-commons",
-			plugin_dir_url( __FILE__ ) . "js/build/js/{$commons}",
+			"{$this->plugin_name}-styles",
+			plugin_dir_url( __FILE__ ) . "js/build/js/{$styles}",
 			array(
 				"{$this->plugin_name}-webpack-runtime",
 			),
@@ -84,7 +84,7 @@ class Wp_Site_Performance_monitor_Admin {
 			plugin_dir_url( __FILE__ ) . "js/build/js/{$index}",
 			array(
 				"{$this->plugin_name}-webpack-runtime",
-				"{$this->plugin_name}-commons"
+				"{$this->plugin_name}-styles"
 			),
 			$this->version,
 			KERNL_SPM_INCLUDE_AT_BOTTOM
@@ -93,7 +93,7 @@ class Wp_Site_Performance_monitor_Admin {
 		// WP REST API
 		$scripts = array(
 			"{$this->plugin_name}-webpack-runtime",
-			"{$this->plugin_name}-commons",
+			"{$this->plugin_name}-styles",
 			"{$this->plugin_name}-index"
 		);
 		foreach($scripts as $handle) {
@@ -113,15 +113,5 @@ class Wp_Site_Performance_monitor_Admin {
 			'admin_top_level_menu_bootstrap',
 			'dashicons-chart-bar'
 		);
-
-		// add_submenu_page(
-		// 	'site-performance-monitor',
-		// 	'Settings',
-		// 	'Settings',
-		// 	'administrator',
-		// 	'wp-site-performance-monitor-settings',
-		// 	'admin_settings_menu_bootstrap'
-		// );
 	}
-
 }
