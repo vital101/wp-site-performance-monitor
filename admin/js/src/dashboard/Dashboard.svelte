@@ -15,7 +15,7 @@
     }).then(activeSiteId => {
       siteId.set(activeSiteId);
     });
- const errorMessage = "There was an error fetching the performance monitor status.";
+ const errorMessage = "There was an error fetching the performance monitor status. If you have caching software enabled, you may need to flush your cache before WP Site Performance Monitor works correctly.";
 </script>
 
 <style>
