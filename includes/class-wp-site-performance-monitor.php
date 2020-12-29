@@ -15,7 +15,7 @@ class Kernl_Wp_Site_Performance_monitor {
 		if ( defined( 'KERNL_SPM_WP_SITE_HEALTH_VERSION' ) ) {
 			$this->version = KERNL_SPM_WP_SITE_HEALTH_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1';
 		}
 		$this->plugin_name = 'wp-site-performance-monitor';
 
@@ -53,13 +53,6 @@ class Kernl_Wp_Site_Performance_monitor {
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Wp_Site_Performance_monitor_Admin( $this->get_plugin_name(), $this->get_version() );
