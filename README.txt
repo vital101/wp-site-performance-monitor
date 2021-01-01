@@ -3,7 +3,7 @@ Contributors: kernl
 Tags: performance,monitor,health,response time,ttfb,lighthouse
 Requires at least: 5.0
 Tested up to: 5.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 7.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -43,6 +43,9 @@ Use the support forums on WordPress.org or email jack AT kernl.us.
 
 == Changelog ==
 
+= 1.0.3 =
+* Adding an admin notice on plugin activation if caching plugins are installed that directs the user to clear their cache.
+
 = 1.0.2 =
 * Release 1.0.1 contained a fatal error that prevented the plugin from starting. This resolves it.
 
@@ -54,6 +57,9 @@ Use the support forums on WordPress.org or email jack AT kernl.us.
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+Usability improvements for first time users during activation.
 
 = 1.0.2 =
 Resolves a fatal error that prevented the plugin from starting.

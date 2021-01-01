@@ -82,6 +82,12 @@ class Kernl_Wp_Site_Performance_monitor {
 				}
 			));
 		});
+
+		// Add the admin notice if needed.
+		$cacheFoundNotice = get_transient('kernl-cache-found-notice');
+		if ($cacheFoundNotice) {
+			add_action('admin_notices', array($this, 'cacheFoundNotice'));
+		}
 	}
 
 	public function run() { $this->loader->run(); }
@@ -134,6 +140,17 @@ class Kernl_Wp_Site_Performance_monitor {
 				"setupComplete" => true
 			);
 		}
-    }
+	}
+
+	public function cacheFoundNotice() {
+		?>
+		<div class="notice notice-warning is-dismissible">
+			<p>
+				<strong>WP Site Performance Monitor: </strong>
+				A caching plugin has been detected on your site. In order for WP Site Performance monitor to work correctly, please clear your cache.
+			</p>
+		</div>
+		<?php
+	}
 
 }
